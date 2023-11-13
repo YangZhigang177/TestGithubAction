@@ -13,6 +13,7 @@ jobs:
     - name: Check out the code
       uses: actions/checkout@v2
 
-    - name: Run your build steps here
+    - name: Display tag information
       run: |
-        echo "Building and testing..."
+        echo "Push event with tag: ${{ github.ref_name }}"
+        echo "Tag name: ${{ github.event.ref_name }}"

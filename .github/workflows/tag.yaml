@@ -1,0 +1,18 @@
+name: TAG_CI
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+
+    - name: Run your build steps here
+      run: |
+        echo "Building and testing..."

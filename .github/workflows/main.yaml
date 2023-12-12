@@ -6,12 +6,10 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE_VIDEOGENERATION: code
-  MODEL_VERSION: "precog_231113_v1"
+  MODEL_VERSION: "v2"
 
 jobs:
   test:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,10 +25,9 @@ jobs:
         run: |    
           export DOCKER_IMAGE="test-image:latest"
           export TAG=latest
-          export MODEL_IMAGE="test-model:v2"
           yq eval '.[0].value = env(DOCKER_IMAGE)' test.yaml
           yq eval '.[1].value = env(TAG)' test.yaml
-          yq eval '.[2].value = env(MODEL_IMAGE)' test.yaml
+          yq eval '.[2].value = env(MODEL_VERSION)' test.yaml
       - name: Commit files
         run: |
           cat test.yaml

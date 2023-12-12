@@ -1,0 +1,36 @@
+name: Update the code
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_VIDEOGENERATION: code
+  MODEL_VERSION: "precog_231113_v1"
+
+jobs:
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Snapd
+        run: |
+          sudo apt-get install -y snapd
+      - name: Install yq using Snap
+        run: |
+          sudo snap install yq
+      - name: "Update Data"
+        shell: bash
+        run: |    
+          export DOCKER_IMAGE="test-image:latest"
+          export TAG=latest
+          export MODEL_IMAGE="test-model:v2"
+          yq eval '.[0].value = env(DOCKER_IMAGE)' test.yaml
+          yq eval '.[1].value = env(TAG)' test.yaml
+          yq eval '.[2].value = env(MODEL_IMAGE)' test.yaml
+      - name: Commit files
+        run: |
+          cat test.yaml

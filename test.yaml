@@ -1,0 +1,9 @@
+- op: replace
+  path: "/spec/template/spec/initContainers/0/image"
+  value: test:abcd
+- op: replace
+  path: "/spec/template/spec/containers/0/env/0/value"
+  value: abcd
+- op: replace
+  path: "/spec/template/spec/initContainers/1/image"
+  value: test-model:v1
